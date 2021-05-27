@@ -1,41 +1,44 @@
 window.onload = () => {
 
-    const $directoryModal = $('#new-directory-modal');
-    const $directoryButton = $('#new-directory-button');
-    const $directoryForm = $('#new-directory-form');
+    let selectedFileId = ''
+    let selectedDirectoryId = '#'
+
+    const addingDirectoryBox = $('#addingDirectoryBox');
+    const $addDirectoryButton = $('#addDirectoryButton');
+    const addingDirectoryForm = $('#addingDirectoryForm');
 
 
-    $directoryButton.on('click', () => {
-        $directoryModal.css('display', 'block');
+    $addDirectoryButton.on('click', () => {
+        addingDirectoryBox.css('display', 'block');
     })
 
 
     window.onclick = (e) => {
 
-        if ($directoryModal.is(e.target)) {
-            $directoryModal.css('display', 'none');
+        if (addingDirectoryBox.is(e.target)) {
+            addingDirectoryBox.css('display', 'none');
         }
 
     }
 
 
-    $directoryForm.submit((e) => {
+    addingDirectoryForm.submit((e) => {
         e.preventDefault();
 
-        let serializedData = $directoryForm.serialize()
+        let serializedData = addingDirectoryForm.serialize()
         serializedData += `&parent_dir_pk=${selectedDirectoryId || '#'}`
 
         $.ajax({
             type: 'POST',
-            url: url_post_new_directory,
+            url: add_dir_url,
             data: serializedData,
             headers: {
                 'X-CSRFToken': csrftoken
             },
             success: (reponse) => {
                 $filesystemTree.jstree(true).refresh();
-                $directoryModal.css('display', 'none');
-                $directoryForm.trigger('reset');
+                addingDirectoryBox.css('display', 'none');
+                addingDirectoryForm.trigger('reset');
             }
         })
     })

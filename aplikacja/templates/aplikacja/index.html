@@ -13,7 +13,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
         <script>
-            const url_post_new_directory = "{% url "post_new_directory" %}";
+            const add_dir_url = "{% url "add_dir" %}";
         </script>
 
         <script src="{% static 'aplikacja/main.js' %}?{% now "U" %}" type="text/javascript"></script>
@@ -114,9 +114,9 @@
         </div>
 
 
-        <div id="new-directory-modal" class="modal">
-            <div class="modal-content">
-                <form id="new-directory-form" method="post">
+        <div id="addingDirectoryBox" class="modal">
+            <div class="contentBox">
+                <form id="addingDirectoryForm" method="post">
                     {% csrf_token %}
                     <label for="directory_name">Directory name:</label>
                     <input name="directory_name" id="directory_name" type="text">

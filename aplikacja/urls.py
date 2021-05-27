@@ -7,7 +7,9 @@ urlpatterns = [
     # ex: /aplikacja/
     path('', views.index, name='index'),
     # ex: /aplikacja/add_dir/
-    path('add_dir/', views.add_dir, name='add_dir'),
+    # path('add_dir/', views.add_dir, name='add_dir'),
+    # ex:
+    path('post/ajax/add_dir/', views.add_dir_ajax, name='add_dir'),
     # ex: /aplikacja/add_file/
     path('add_file/', views.add_file, name='add_file'),
     # ex: /aplikacja/delete_dir/

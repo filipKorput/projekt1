@@ -221,7 +221,7 @@
 	  background-color: rgba(0, 0, 0, 0.4);
 	}
 
-	.modal-content {
+	.contentBox {
 	  background-color: #3B4252;
 	  position: absolute;
 	  float: left;
@@ -235,16 +235,16 @@
 	  align-items: center;
 	  align-content: center;
 	}
-	.modal-content form {
+	.contentBox form {
 	  width: 100%;
 	  align-items: center;
 	  display: flex;
 	  flex-direction: column;
 	}
-	.modal-content form label, .modal-content form input {
+	.contentBox form label, .contentBox form input {
 	  margin-bottom: 10px;
 	}
-	.modal-content textarea {
+	.contentBox textarea {
 	  width: 100%;
 	  min-height: 300px;
 	}
