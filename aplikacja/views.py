@@ -33,8 +33,8 @@ def authentication(request):
 
 def index(request):
     context = {
-        'directory_list': Directory.objects.filter(availability=True),
-        'file_list': File.objects.filter(availability=True)
+        'directory_list': Directory.objects.filter(availability=True, owner=request.user),
+        'file_list': File.objects.filter(availability=True, owner=request.user)
     }
     return render(request, 'aplikacja/index.html', context)
 
