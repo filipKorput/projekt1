@@ -22,7 +22,8 @@ def getFramaSectionsFromFile(file, prover, VCs):
         file.summary = f.read()
     file.save()
     section_list = p.stdout.split(border)
-    section_list.pop(0)
+    if len(section_list) > 0:
+        section_list.pop(0)
     section_list.pop(len(section_list) - 1)
     return section_list
 

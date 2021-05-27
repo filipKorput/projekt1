@@ -1,12 +1,18 @@
 <h1>{{file.name}}</h1>
 
-        {%for section in sectionList %}
+    {% if not sectionList %}
 
-            <div class="tooltip {{ section.1 }}">
-                <pre>{{ section.0 }}</pre>
-                <span class="tooltiptext">{{ section.2 }}</span>
-            </div>
-            <p>------------------------------------------------------------</p>
+        <p>No sections</p>
 
-        {%endfor%}
+    {% endif %}
+
+    {%for section in sectionList %}
+
+        <div class="tooltip {{ section.1 }}">
+            <pre>{{ section.0 }}</pre>
+            <span class="tooltiptext">{{ section.2 }}</span>
+        </div>
+        <p>------------------------------------------------------------</p>
+
+    {%endfor%}
 
