@@ -1,0 +1,2 @@
+[wp] Proved goals:    0 / 0
+[wp] No proof obligations
