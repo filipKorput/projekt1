@@ -48,8 +48,8 @@ def detail(request, name):
     summary = file.summary.replace('\n', '<br>')
     sectionList = getSectionsOfFile(file)
     context = {
-        'directory_list': Directory.objects.filter(availability=True),
-        'file_list': File.objects.filter(availability=True),
+        'directory_list': Directory.objects.filter(availability=True, owner=request.user),
+        'file_list': File.objects.filter(availability=True, owner=request.user),
         'file': file,
         'fileContent': data,
         'sectionList': sectionList,
@@ -64,8 +64,7 @@ def add_dir(request):
     form = DirectoryForm(request.POST)
     form.instance.creation_date = timezone.now()
     form.instance.availability = True
-    u = User.objects.get(login="U2")
-    form.instance.owner = u
+    form.instance.owner = request.user
     if form.is_valid():
         form.instance.save()
         return HttpResponseRedirect('..')
@@ -75,8 +74,7 @@ def add_file(request):
     form = FileForm(request.POST, request.FILES)
     form.instance.creation_date = timezone.now()
     form.instance.availability = True
-    u = User.objects.get(login="U2")
-    form.instance.owner = u
+    form.instance.owner = request.user
     if form.is_valid():
         form.instance.blob = request.FILES['blob']
         form.instance.save()
