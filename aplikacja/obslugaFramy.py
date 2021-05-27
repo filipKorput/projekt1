@@ -3,6 +3,8 @@ from .models import Section, Status_Data
 import subprocess
 from django.conf import settings
 
+from django.utils import timezone
+
 
 def getFramaSectionsFromFile(file, prover, VCs):
     command = ['frama-c', '-wp', '-wp-print', '-wp-log=r:result.txt']
