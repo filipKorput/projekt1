@@ -62,6 +62,54 @@ def detail(request, name):
     }
     return render(request, 'aplikacja/index.html', context)
 
+def select_file(request):
+    if not request.user.is_authenticated:
+        return authentication_json_error
+
+    if request.is_ajax and request.method == 'GET':
+        file_pk = request.GET.get('file')
+
+        if file_pk is None or not file_pk.isnumeric():
+            return JsonResponse({"error": ""}, status=404)
+
+        file = File.objects.get(name=file_pk)
+
+        if file is None or not file.available or file.owner != request.user:
+            return JsonResponse({"error": ""}, status=404)
+
+        with open(file.blob.path, 'r', encoding='UTF-8') as fileObject:
+            data = fileObject.read().replace('\n', '</br>')
+        summary = file.summary.replace('\n', '<br>')
+        sectionList = getSectionsOfFile(file)
+        context = {
+            'directory_list': Directory.objects.filter(availability=True, owner=request.user),
+            'file_list': File.objects.filter(availability=True, owner=request.user),
+            'file': file,
+            'fileContent': data,
+            'sectionList': sectionList,
+            'proverForm': ProversForm(),
+            'VCForm': VCsForm(),
+            'summary': summary
+        }
+
+        file_sections_arr = []
+
+        file_sections = file.filesection_set.all()
+
+        for section in file_sections:
+            file_sections_arr.append({
+                "name": section.name,
+                "description": section.description,
+                "key": section.pk
+            })
+
+        file_dict = {"source_code": file.source_code, "name": file.name, "sections": file_sections_arr}
+        return JsonResponse(context, status=200)
+
+    return JsonResponse({"error": ""}, status=400)
+
+
+
 
 def add_dir(request):
     form = DirectoryForm(request.POST)

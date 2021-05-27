@@ -17,7 +17,8 @@ urlpatterns = [
     # ex: /aplikacja/delete_file/
     path('delete_file/', views.delete_file, name='delete_file'),
     # ex: /aplikacja/detail/file.name/
-    path('detail/<str:name>/', views.detail, name='detail'),
+    # path('detail/<str:name>/', views.detail, name='detail'),
+    path('get/ajax/select_file/', views.select_file, name='select_file'),
     # ex: /aplikacja/rerun_frama/file.name/
     path('rerun_frama/<str:name>/', views.rerun_frama, name='rerun_frama'),
     # ex: /aplikacja/change_prover/file.name/
