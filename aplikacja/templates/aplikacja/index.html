@@ -118,7 +118,13 @@
 
 
         <div id="addingDirectoryBox" class="box">
-            <div class="contentBox">
+
+        </div>
+
+    </body>
+</html>
+
+<div class="contentBox">
                 <form id="addingDirectoryForm" method="post">
                     {% csrf_token %}
                     <label for="directory_name">Directory name:</label>
@@ -126,7 +132,3 @@
                     <input type="submit" value="Add directory">
                 </form>
             </div>
-        </div>
-
-    </body>
-</html>
