@@ -25,6 +25,9 @@
         <div class="main">
 
             <div class="menu">
+                <button class="menuButton" id="addingDirectoryButton">
+                    Add directory with ajax
+                </button>
                 <button class="menuButton">
                     <a href="{% url "add_dir" %}">Add directory</a>
                 </button>
@@ -115,7 +118,7 @@
         </div>
 
 
-        <div id="addingDirectoryBox" class="modal">
+        <div id="addingDirectoryBox" class="box">
             <div class="contentBox">
                 <form id="addingDirectoryForm" method="post">
                     {% csrf_token %}
@@ -125,7 +128,6 @@
                 </form>
             </div>
         </div>
-
 
     </body>
 </html>

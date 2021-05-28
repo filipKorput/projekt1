@@ -7,6 +7,44 @@ window.onload = () => {
     const $filesystemTree = $('#fileselection');
     const $focusSection = $('#focus');
 
+    const $directoryModal = $('#addingDirectoryBox');
+    const $directoryButton = $('#addingDirectoryButton');
+    const $directoryForm = $('#addingDirectoryForm');
+
+    $directoryButton.on('click', () => {
+        $directoryModal.css('display', 'block');
+    })
+
+    window.onclick = (e) => {
+
+        if ($directoryModal.is(e.target)) {
+            $directoryModal.css('display', 'none');
+        }
+
+    }
+
+    $directoryForm.submit((e) => {
+        e.preventDefault();
+
+        let serializedData = $directoryForm.serialize()
+        serializedData += `&parent_dir_pk=${selectedDirectoryId || '#'}`
+
+        $.ajax({
+            type: 'POST',
+            url: url_post_new_directory,
+            data: serializedData,
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+            success: (reponse) => {
+                $filesystemTree.jstree(true).refresh();
+                $directoryModal.css('display', 'none');
+                $directoryForm.trigger('reset');
+            }
+        })
+    })
+
+
    const fetchFile = (fileId) => {
        print(${fileId})
         $.ajax({

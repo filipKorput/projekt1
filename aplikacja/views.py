@@ -128,6 +128,27 @@ def add_dir(request):
     return render(request, 'aplikacja/add_dir.html', {'form': form})
 
 
+def add_dir_ajax(request):
+    if not request.user.is_authenticated:
+        return authentication_json_error
+
+    if request.is_ajax and request.method == "POST":
+        name = request.POST.get('directory_name')
+        parent_dir_pk = request.POST.get('parent_dir_pk')
+        user = request.user
+        parent_directory = Directory.objects.filter(pk=parent_dir_pk).first() if parent_dir_pk != "#" else None
+
+        if parent_directory.owner != user:
+            return JsonResponse({"error": ""}, status=400)
+
+        if name is not None and user is not None:
+            directory = Directory.create(name=name, description=None, owner=user, parent_directory=parent_directory)
+            directory.save()
+            return JsonResponse({"instance": ""}, status=200)
+
+    return JsonResponse({"error": ""}, status=400)
+
+
 def add_file(request):
     form = FileForm(request.POST, request.FILES)
     form.instance.creation_date = timezone.now()
