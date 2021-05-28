@@ -25,8 +25,8 @@
         <div class="main">
 
             <div class="menu">
-                <button class="menuButton" id="addDirectoryButton" type="button">
-                    Add directory
+                <button class="menuButton">
+                    <a href="../../add_dir/">Add file</a>
                 </button>
                 <button class="menuButton">
                     <a href="../../add_file/">Add file</a>
@@ -48,8 +48,8 @@
 
             </div>
 
-            <div class="pole_docelowe" id="fileselection">
-
+            <div class="fileselection pole_docelowe">
+                {% include 'aplikacja/fileselection.html' %}
             </div>
 
             <div class="reszta">
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="focus pole_docelowe">
-
+                    {% include 'aplikacja/focus.html' %}
                 </div>
 
             </div>
