@@ -171,10 +171,7 @@ window.onload = () => {
                  $('.focus').empty()
 
                  for (const section of response.sectionList) {
-                     const key = Number(section.key)
-                     $('.focus').append($('<button>').addClass('collapsible').html(section[2] + section[1]));
-                     $('.focus').append($('<div>').addClass('section_content').html(section[0]));
-                     $('.focus').append($('<p>').text("------------------------------------------------------------"));
+                     $('<div>').addClass('section')).appendTo('.focus').append($('<div>').addClass('section')).append($('<button>').addClass('collapsible').html(section[2] + " - " + section[1])).append($('<div>').addClass('section_content').html(section[0])).append($('<p>').text("------------------------------------------------------------"));
                  }
              }
          });
