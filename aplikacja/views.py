@@ -146,7 +146,7 @@ def add_dir_ajax(request):
             form.instance.save()
             instance = form.save()
             ser_instance = serializers.serialize('json', [instance, ])
-        return JsonResponse({"instance": ser_instance}, status=200)
+            return JsonResponse({"instance": ser_instance}, status=200)
 
     return JsonResponse({"error": "form.errors"}, status=400)
 
@@ -176,6 +176,7 @@ def add_file_ajax(request):
         form.instance.creation_date = timezone.now()
         form.instance.availability = True
         form.instance.owner = request.user
+        print(form)
         if form.is_valid():
             form.instance.blob = request.FILES['blob']
             form.instance.save()
@@ -185,7 +186,7 @@ def add_file_ajax(request):
             VCs = []
             addSectionsOfFile(file, prover, VCs)
             ser_instance = serializers.serialize('json', [instance, ])
-        return JsonResponse({"instance": ser_instance}, status=200)
+            return JsonResponse({"instance": ser_instance}, status=200)
 
     return JsonResponse({"error": "form.errors"}, status=400)
 
