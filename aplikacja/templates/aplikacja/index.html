@@ -14,6 +14,7 @@
 
         <script>
             const add_dir_url = "{% url "add_dir_ajax" %}";
+            const add_file_url = "{% url "add_file_ajax" %}";
             const url_get_filesystem_tree = "{% url "get_filesystem_tree" %}";
             const select_file_url = "{% url "get_file" %}";
         </script>
@@ -27,10 +28,10 @@
 
             <div class="menu">
                 <button class="menuButton" id="addingDirectoryButton">
-                    Add directory with ajax
+                    Add directory
                 </button>
-                <button class="menuButton">
-                    <a href="{% url "add_dir" %}">Add directory</a>
+                <button class="menuButton" id="addingFileButton">
+                    Add file
                 </button>
                 <button class="menuButton">
                     <a href="{% url "add_file" %}">Add file</a>
@@ -121,6 +122,16 @@
                     <form id="addingDirectoryForm" method="post">
                         {% csrf_token %}
                         {{ directoryForm }}
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+
+            <div id="addingFileBox" class="box">
+                <div class="contentBox">
+                    <form id="addingFileForm" method="post">
+                        {% csrf_token %}
+                        {{ fileForm }}
                         <input type="submit" value="Submit">
                     </form>
                 </div>

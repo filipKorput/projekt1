@@ -39,11 +39,13 @@ def index(request):
     context = {
         'directory_list': Directory.objects.filter(availability=True, owner=request.user),
         'file_list': File.objects.filter(availability=True, owner=request.user),
-        'directoryForm': DirectoryForm()
+        'directoryForm': DirectoryForm(),
+        'fileForm': FileForm()
     }
     return render(request, 'aplikacja/index.html', context)
 
 logger = logging.getLogger(__name__)
+
 
 def detail(request, name):
     file = File.objects.get(pk=name)
@@ -61,7 +63,8 @@ def detail(request, name):
         'proverForm': ProversForm(),
         'VCForm': VCsForm(),
         'summary': summary,
-        'directoryForm': DirectoryForm()
+        'directoryForm': DirectoryForm(),
+        'fileForm': FileForm()
     }
     return render(request, 'aplikacja/index.html', context)
 
@@ -81,7 +84,6 @@ def get_file(request):
 
         if file is None or not file.available or file.owner != request.user:
             return JsonResponse({"error": ""}, status=404)
-
 
         file_sections = getSectionsOfFile(file)
 
@@ -163,6 +165,30 @@ def add_file(request):
         addSectionsOfFile(file, prover, VCs)
         return HttpResponseRedirect('..')
     return render(request, 'aplikacja/add_file.html', {'form': form})
+
+
+def add_dir_ajax(request):
+    if not request.user.is_authenticated:
+        return authentication_json_error
+
+    if request.is_ajax and request.method == "POST":
+        form = FileForm(request.POST, request.FILES)
+        form.instance.creation_date = timezone.now()
+        form.instance.availability = True
+        form.instance.owner = request.user
+        if form.is_valid():
+            form.instance.blob = request.FILES['blob']
+            form.instance.save()
+            instance = form.save()
+            file = File.objects.get(name=form.instance.name)
+            prover = None
+            VCs = []
+            addSectionsOfFile(file, prover, VCs)
+            ser_instance = serializers.serialize('json', [instance, ])
+        return JsonResponse({"instance": ser_instance}, status=200)
+
+    return JsonResponse({"error": "form.errors"}, status=400)
+
 
 def delete_dir(request):
     context = {

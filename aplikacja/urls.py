@@ -11,6 +11,7 @@ urlpatterns = [
     path('post/ajax/add_dir_ajax/', views.add_dir_ajax, name='add_dir_ajax'),
     # ex: /aplikacja/add_file/
     path('add_file/', views.add_file, name='add_file'),
+    path('post/ajax/add_file_ajax/', views.add_file_ajax, name='add_file_ajax'),
     # ex: /aplikacja/delete_dir/
     path('delete_dir/', views.delete_dir, name='delete_dir'),
     # ex: /aplikacja/delete_file/
