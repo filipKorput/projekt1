@@ -26,20 +26,20 @@
 
             <div class="menu">
                 <button class="menuButton">
-                    <a href="../../add_dir/">Add file</a>
+                    <a href="{% url "add_dir" %}">Add directory</a>
                 </button>
                 <button class="menuButton">
-                    <a href="../../add_file/">Add file</a>
+                    <a href="{% url "add_file" %}">Add file</a>
                 </button>
                 <button class="menuButton">
-                    <a href="../../delete_dir/">Delete directory</a>
+                    <a href="{% url "delete_dir" %}">Delete directory</a>
                 </button>
                 <button class="menuButton">
-                    <a href="../../delete_file/">Delete file</a>
+                    <a href="{% url "delete_file" %}">Delete file</a>
                 </button>
                 {% if file %}
                     <button class="menuButton">
-                        <a href="../../rerun_frama/{{ file.name }}/">Rerun verification</a>
+                        <a href="{% url "rerun_frama" file.name %}">Rerun verification</a>
                     </button>
                 {% endif %}
                 <button class="menuButton">
