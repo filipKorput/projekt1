@@ -4,7 +4,7 @@
             {%for file in file_list %}
                 {% if file.parent == directory %}
                     <li>
-                        <a class="file_name" href="{% url 'select_file' file.pk %}">{{ file.name }}</a>
+                        <a class="file_name" href="{% url 'file' file.parent.pk file.pk %}">{{ file.name }}</a>
                     </li>
                 {% endif %}
             {%endfor%}
@@ -17,5 +17,5 @@
           {%endwith%}
          {% endif %}
      {%endfor%}
-     </ul>
+    </ul>
 </li>
