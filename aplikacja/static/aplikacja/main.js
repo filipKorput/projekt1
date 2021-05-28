@@ -4,7 +4,7 @@ window.onload = () => {
     let selectedDirectoryId = '#'
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-    const $filesystemTree = $('#fileselection');
+    const $filesystemTree = $('.fileselection');
     const $focusSection = $('#focus');
 
    const fetchFile = (fileId) => {
