@@ -94,11 +94,7 @@ def select_file(request):
         directory = {
             'fileContent': data,
             'sectionList': sectionList,
-            'proverForm': ProversForm(),
-            'VCForm': VCsForm(),
             'summary': summary,
-            'directoryForm': DirectoryForm(),
-            'fileForm': FileForm()
         }
         print("Still here")
         return JsonResponse(directory, status=200)
