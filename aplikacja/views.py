@@ -76,13 +76,14 @@ def select_file(request):
     if request.is_ajax and request.method == 'POST':
         file_name = request.POST.get('fileName')
 
+        print(file_name)
         if file_name is None:
             print("no file")
             return JsonResponse({"error": ""}, status=404)
 
         file = File.objects.get(name=file_name)
 
-        if file is None or not file.available or file.owner != request.user:
+        if file is None or not file.availability or file.owner != request.user:
             return JsonResponse({"error": ""}, status=404)
 
         with open(file.blob.path, 'r', encoding='UTF-8') as fileObject:
