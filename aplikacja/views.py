@@ -69,25 +69,41 @@ def detail(request, name):
     return render(request, 'aplikacja/index.html', context)
 
 
-def get_file(request):
+def select_file(request):
     if not request.user.is_authenticated:
         return authentication_json_error
 
-    if request.is_ajax and request.method == 'GET':
-        file_pk = request.GET.get('file')
+    if request.is_ajax and request.method == 'POST':
+        file_name = request.POST.get('val')
 
-        if file_pk is None or not file_pk.isnumeric():
-            print(file_pk)
+        if file_name is None:
+            print("no file")
             return JsonResponse({"error": ""}, status=404)
 
-        file = File.objects.get(pk=file_pk)
+        file = File.objects.get(name=file_name)
 
         if file is None or not file.available or file.owner != request.user:
             return JsonResponse({"error": ""}, status=404)
 
-        file_sections = getSectionsOfFile(file)
+        with open(file.blob.path, 'r', encoding='UTF-8') as fileObject:
+            data = fileObject.read().replace('\n', '</br>')
+        summary = file.summary.replace('\n', '<br>')
+        sectionList = getSectionsOfFile(file)
 
-        return JsonResponse(file_sections, status=200)
+        context = {
+            'directory_list': Directory.objects.filter(availability=True, owner=request.user),
+            'file_list': File.objects.filter(availability=True, owner=request.user),
+            'file': file,
+            'fileContent': data,
+            'sectionList': sectionList,
+            'proverForm': ProversForm(),
+            'VCForm': VCsForm(),
+            'summary': summary,
+            'directoryForm': DirectoryForm(),
+            'fileForm': FileForm()
+        }
+
+        return JsonResponse(context, status=200)
 
     return JsonResponse({"error": ""}, status=400)
 

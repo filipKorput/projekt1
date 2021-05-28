@@ -149,4 +149,23 @@ window.onload = () => {
         })
     })
 
+
+    $("#fileChoice").click(function() {
+
+        let val = $(this).val();
+
+         $.ajax(
+             type: 'POST',
+             url : select_file_url,
+             data: val;
+             success: (response) => {
+                $('#textFieldContent').val(context.fileContent)
+            }
+        );
+
+        return false;
+    });
+
+
+
 }

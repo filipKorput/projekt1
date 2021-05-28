@@ -20,7 +20,7 @@ urlpatterns = [
     path('post/ajax/delete_file/', views.delete_file_ajax, name='delete_file_ajax'),
     # ex: /aplikacja/detail/file.name/
     path('detail/<str:name>/', views.detail, name='detail'),
-    path('get/ajax/file/', views.get_file, name='get_file'),
+    path('get/ajax/file/', views.select_file, name='select_file'),
     path('get/ajax/filesystem_tree/', views.get_filesystem_tree, name='get_filesystem_tree'),
     # ex: /aplikacja/rerun_frama/file.name/
     path('rerun_frama/<str:name>/', views.rerun_frama, name='rerun_frama'),
