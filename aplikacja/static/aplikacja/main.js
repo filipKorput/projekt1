@@ -79,16 +79,12 @@ window.onload = () => {
     $addingFileForm.submit(function (e) {
         e.preventDefault();
 
-        let data = new FormData($('form').get(0));
-
-        let f_obj = $("#blob").get(0).files[0];
-        console.log("File object:", f_obj);
-
-        data.append("uploadedFile", f_obj)
+        let data = new FormData(this); //get data of form elements for submission
 
         $.ajax({
             type: 'POST',
             url: add_file_url,
+            enctype: 'multipart/form-data',
             data: data,
             cache: false,
             processData:false,
