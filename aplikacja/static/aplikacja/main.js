@@ -26,19 +26,17 @@ window.onload = () => {
         e.preventDefault();
 
         let serializedData = $addingDirectoryForm.serialize()
-        serializedData += `&parent_dir_pk=${selectedDirectoryId || '#'}`
 
         $.ajax({
             type: 'POST',
-            url: url_post_new_directory,
+            url: add_dir_url,
             data: serializedData,
             headers: {
                 'X-CSRFToken': csrftoken
             },
-            success: (reponse) => {
-                $filesystemTree.jstree(true).refresh();
-                $directoryModal.css('display', 'none');
-                $directoryForm.trigger('reset');
+            success: (response) => {
+                $addingDirectoryBox.css('display', 'none');
+                $addingDirectoryForm.trigger('reset');
             }
         })
     })

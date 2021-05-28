@@ -13,6 +13,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
         <script>
+            const add_dir_url = "{% url "add_dir_ajax" %}";
             const url_get_filesystem_tree = "{% url "get_filesystem_tree" %}";
             const select_file_url = "{% url "get_file" %}";
         </script>
@@ -120,6 +121,7 @@
                     <form id="addingDirectoryForm" method="post">
                         {% csrf_token %}
                         {{ directoryForm }}
+                        <input type="submit" value="Submit">
                     </form>
                 </div>
             </div>
