@@ -74,7 +74,7 @@ def select_file(request):
         return authentication_json_error
 
     if request.is_ajax and request.method == 'POST':
-        file_name = request.POST.get('val')
+        file_name = request.POST.get('fileName')
 
         if file_name is None:
             print("no file")

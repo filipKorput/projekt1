@@ -159,7 +159,7 @@ window.onload = () => {
          $.ajax({
              type: 'POST',
              url: select_file_url,
-             data: val,
+             data: '&fileName=' + val,
              headers: {
                 'X-CSRFToken': csrftoken
             },
