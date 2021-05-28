@@ -7,18 +7,20 @@ window.onload = () => {
     const $filesystemTree = $('#fileselection');
     const $focusSection = $('#focus');
 
-    const $directoryModal = $('#addingDirectoryBox');
+    const $addingDirectoryBox = $('#addingDirectoryBox');
     const $directoryButton = $('#addingDirectoryButton');
     const $directoryForm = $('#addingDirectoryForm');
 
+
+
     $directoryButton.on('click', () => {
-        $directoryModal.css('display', 'block');
+        $addingDirectoryBox.css('display', 'block');
     })
 
     window.onclick = (e) => {
 
-        if ($directoryModal.is(e.target)) {
-            $directoryModal.css('display', 'none');
+        if ($addingDirectoryBox.is(e.target)) {
+            $addingDirectoryBox.css('display', 'none');
         }
 
     }
@@ -38,7 +40,7 @@ window.onload = () => {
             },
             success: (reponse) => {
                 $filesystemTree.jstree(true).refresh();
-                $directoryModal.css('display', 'none');
+                $addingDirectoryBox.css('display', 'none');
                 $directoryForm.trigger('reset');
             }
         })
