@@ -47,9 +47,14 @@
 
                 {% if file %}
                     <button class="menuButton">
-                        <a href="{% url "rerun_frama" file.name %}">Rerun verification</a>
+                        <a href="{% url "rerun_frama" file.name %}">Rerun verification (old)</a>
                     </button>
                 {% endif %}
+
+                <button class="menuButton">
+                    <a href="{% url "rerun_frama" selectedFile %}">Rerun verification (new)</a>
+                </button>
+
                 <button class="menuButton">
                     <a href="{% url "login" %}">Login</a>
                 </button>
