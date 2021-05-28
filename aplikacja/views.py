@@ -92,7 +92,6 @@ def select_file(request):
         sectionList = getSectionsOfFile(file)
 
         directory = {
-            'file': file,
             'fileContent': data,
             'sectionList': sectionList,
             'proverForm': ProversForm(),
