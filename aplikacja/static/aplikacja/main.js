@@ -171,7 +171,15 @@ window.onload = () => {
                  $('.focus').empty()
 
                  for (const section of response.sectionList) {
-                     $('<div/>', { 'class': "section" }).appendTo($('.focus')).append($('<button>').attr('type', 'button').addClass('collapsible').html(section[2] + " - " + section[1])).append($('<div>').addClass('section_content').html("<pre>" + section[0] + "</pre>"));
+                     $('<div/>', { 'class': "section" }).appendTo($('.focus')).append($('<button>').attr('type', 'button').addClass('collapsible').html(section[2] + " - " + section[1]).click(function() {
+                    $(this.classList).toggle("active");
+                    let content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                      content.style.display = "none";
+                    } else {
+                      content.style.display = "block";
+                    }
+                    })).append($('<div>').addClass('section_content').html("<pre>" + section[0] + "</pre>"));
                      ($('.focus')).append($('<p>').text("------------------------------------------------------------"));
                  }
              }
@@ -193,8 +201,5 @@ window.onload = () => {
         }
 
     });
-
-
-
 
 }
