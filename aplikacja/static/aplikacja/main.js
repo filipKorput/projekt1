@@ -1,5 +1,7 @@
 window.onload = () => {
 
+    let selectedFile = ''
+
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     const $addingDirectoryBox = $('#addingDirectoryBox');
@@ -164,6 +166,7 @@ window.onload = () => {
                 'X-CSRFToken': csrftoken
              },
              success: (response) => {
+                 selectedFile = response.title
                  $('#textFieldContent').html(response.fileContent)
                  $('#title').text(response.title)
                  $('#resultContent').html(response.summary)
@@ -172,14 +175,14 @@ window.onload = () => {
 
                  for (const section of response.sectionList) {
                      $('<div/>', { 'class': "section" }).appendTo($('.focus')).append($('<button>').attr('type', 'button').addClass('collapsible').html(section[2] + " - " + section[1]).click(function() {
-                    $(this.classList).toggle("active");
-                    let content = this.nextElementSibling;
-                    if (content.style.display === "block") {
-                      content.style.display = "none";
-                    } else {
-                      content.style.display = "block";
-                    }
-                    })).append($('<div>').addClass('section_content').html("<pre>" + section[0] + "</pre>"));
+                     $(this.classList).toggle("active");
+                     let content = this.nextElementSibling;
+                     if (content.style.display === "block") {
+                       content.style.display = "none";
+                     } else {
+                       content.style.display = "block";
+                     }
+                     })).append($('<div>').addClass('section_content').html("<pre>" + section[0] + "</pre>"));
                      ($('.focus')).append($('<p>').text("------------------------------------------------------------"));
                  }
              }

@@ -40,7 +40,9 @@ def index(request):
         'directory_list': Directory.objects.filter(availability=True, owner=request.user),
         'file_list': File.objects.filter(availability=True, owner=request.user),
         'directoryForm': DirectoryForm(),
-        'fileForm': FileForm()
+        'fileForm': FileForm(),
+        'proverForm': ProversForm(),
+        'VCForm': VCsForm()
     }
     return render(request, 'aplikacja/index.html', context)
 
