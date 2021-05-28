@@ -152,7 +152,9 @@ window.onload = () => {
 
     $(".fileChoice").click(function() {
 
-        let val = $(this).val();
+         let val = $(this).val();
+
+         console.log(val);
 
          $.ajax({
              type: 'POST',
