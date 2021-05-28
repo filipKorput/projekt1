@@ -32,24 +32,19 @@
                 <button class="menuButton" id="addingDirectoryButton">
                     Add directory
                 </button>
+
                 <button class="menuButton" id="addingFileButton">
                     Add file
                 </button>
-                <button class="menuButton">
-                    <a href="{% url "add_file" %}">Add file</a>
-                </button>
+
                 <button class="menuButton" id="deletingDirectoryButton">
                     Delete directory
                 </button>
-                <button class="menuButton">
-                    <a href="{% url "delete_dir" %}">Delete directory</a>
-                </button>
+
                 <button class="menuButton" id="deletingFileButton">
                     Delete file
                 </button>
-                <button class="menuButton">
-                    <a href="{% url "delete_file" %}">Delete file</a>
-                </button>
+
                 {% if file %}
                     <button class="menuButton">
                         <a href="{% url "rerun_frama" file.name %}">Rerun verification</a>
