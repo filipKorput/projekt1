@@ -62,6 +62,7 @@ def detail(request, name):
     }
     return render(request, 'aplikacja/index.html', context)
 
+
 def get_file(request):
     if not request.user.is_authenticated:
         return authentication_json_error
@@ -70,6 +71,7 @@ def get_file(request):
         file_pk = request.GET.get('file')
 
         if file_pk is None or not file_pk.isnumeric():
+            print(file_pk)
             return JsonResponse({"error": ""}, status=404)
 
         file = File.objects.get(pk=file_pk)
