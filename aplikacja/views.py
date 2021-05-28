@@ -177,7 +177,6 @@ def add_file_ajax(request):
         form.instance.availability = True
         form.instance.owner = request.user
         form.instance.blob = request.FILES['blob']
-        print(form)
         print(form.errors)
         if form.is_valid():
             form.instance.save()
@@ -203,6 +202,20 @@ def delete_dir(request):
         return HttpResponseRedirect('..')
     return render(request, 'aplikacja/delete_dir.html', context)
 
+
+def delete_dir_ajax(request):
+    if not request.user.is_authenticated:
+        return authentication_json_error
+
+    if request.is_ajax and request.method == "POST":
+        name = request.POST.get('name')
+        d = Directory.objects.get(name=name)
+        d.availability = False
+        d.save()
+        return JsonResponse({}, status=200)
+    return JsonResponse({"error": "form.errors"}, status=400)
+
+
 def delete_file(request):
     context = {
         'file_list': File.objects.filter(availability=True),
@@ -214,6 +227,19 @@ def delete_file(request):
         f.save()
         return HttpResponseRedirect('..')
     return render(request, 'aplikacja/delete_file.html', context)
+
+
+def delete_file_ajax(request):
+    if not request.user.is_authenticated:
+        return authentication_json_error
+
+    if request.is_ajax and request.method == "POST":
+        name = request.POST.get('name')
+        f = File.objects.get(name=name)
+        f.availability = False
+        f.save()
+        return JsonResponse({}, status=200)
+    return JsonResponse({"error": "form.errors"}, status=400)
 
 
 def rerun_frama(request, name):

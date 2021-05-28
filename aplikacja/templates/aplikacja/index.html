@@ -15,6 +15,8 @@
         <script>
             const add_dir_url = "{% url "add_dir_ajax" %}";
             const add_file_url = "{% url "add_file_ajax" %}";
+            const delete_dir_url = "{% url "delete_dir_ajax" %}";
+            const delete_file_url = "{% url "delete_file_ajax" %}";
             const url_get_filesystem_tree = "{% url "get_filesystem_tree" %}";
             const select_file_url = "{% url "get_file" %}";
         </script>
@@ -36,8 +38,14 @@
                 <button class="menuButton">
                     <a href="{% url "add_file" %}">Add file</a>
                 </button>
+                <button class="menuButton" id="deletingDirectoryButton">
+                    Delete directory
+                </button>
                 <button class="menuButton">
                     <a href="{% url "delete_dir" %}">Delete directory</a>
+                </button>
+                <button class="menuButton" id="deletingFileButton">
+                    Delete file
                 </button>
                 <button class="menuButton">
                     <a href="{% url "delete_file" %}">Delete file</a>
@@ -132,6 +140,44 @@
                     <form id="addingFileForm" method="post">
                         {% csrf_token %}
                         {{ fileForm }}
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+
+            <div id="deletingDirectoryBox" class="box">
+                <div class="contentBox">
+                    <form id="deletingDirectoryForm" method="post">
+                        {% csrf_token %}
+                        <p>
+                            <label for="name">Directory name: </label>
+                        </p>
+                        <p>
+                            <select id="name" name="name">
+                                {% for directory in directory_list %}
+                                    <option value="{{ directory.name }}">{{ directory.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+
+            <div id="deletingFileBox" class="box">
+                <div class="contentBox">
+                    <form id="deletingFileForm" method="post">
+                        {% csrf_token %}
+                        <p>
+                            <label for="name">File name: </label>
+                        </p>
+                        <p>
+                            <select id="name" name="name">
+                                {% for file in file_list %}
+                                    <option value="{{ file.name }}">{{ file.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
                         <input type="submit" value="Submit">
                     </form>
                 </div>
