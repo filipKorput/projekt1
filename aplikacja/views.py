@@ -263,6 +263,45 @@ def rerun_frama(request, name):
     updateFramaOfFile(file, prover, VCs)
     return HttpResponseRedirect('/aplikacja/detail/' + name)
 
+
+def rerun_frama_ajax(request):
+    if not request.user.is_authenticated:
+        return authentication_json_error
+
+    if request.is_ajax and request.method == 'POST':
+        file_name = request.POST.get('fileName')
+
+        print(file_name)
+        if file_name is None:
+            print("no file")
+            return JsonResponse({"error": ""}, status=404)
+
+        file = File.objects.get(name=file_name)
+
+        if file is None or not file.availability or file.owner != request.user:
+            return JsonResponse({"error": ""}, status=404)
+
+        prover = request.session.get('prover', '')
+        VCs = request.session.get('VCs', [])
+        updateFramaOfFile(file, prover, VCs)
+
+        with open(file.blob.path, 'r', encoding='UTF-8') as fileObject:
+            data = fileObject.read().replace('\n', '</br>')
+        summary = file.summary.replace('\n', '<br>')
+        sectionList = getSectionsOfFile(file)
+
+        directory = {
+            'fileContent': data,
+            'sectionList': sectionList,
+            'summary': summary,
+            'title': file.name
+        }
+        print("Still here")
+        return JsonResponse(directory, status=200)
+
+    return JsonResponse({"error": ""}, status=400)
+
+
 def change_prover(request, name):
     prover = request.POST['prover']
     request.session['prover'] = prover

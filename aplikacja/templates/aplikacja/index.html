@@ -19,6 +19,7 @@
             const delete_file_url = "{% url "delete_file_ajax" %}";
             const url_get_filesystem_tree = "{% url "get_filesystem_tree" %}";
             const select_file_url = "{% url "select_file" %}";
+            const rerun_frama_url = "{%  url "rerun_frama_ajax %}";
         </script>
 
         <script src="{% static 'aplikacja/main.js' %}?{% now "U" %}" type="text/javascript"></script>
@@ -51,8 +52,8 @@
                     </button>
                 {% endif %}
 
-                <button class="menuButton">
-                    <a href="{% url "rerun_frama" selectedFile %}">Rerun verification (new)</a>
+                <button class="menuButton" id="rerunFramaButton">
+                    Rerun verification (new)
                 </button>
 
                 <button class="menuButton">

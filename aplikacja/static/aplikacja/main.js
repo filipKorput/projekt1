@@ -1,6 +1,6 @@
 window.onload = () => {
 
-    let selectedFile = 'quicksort1.c'
+    let selectedFile = ''
 
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
@@ -19,6 +19,8 @@ window.onload = () => {
     const $deletingFileBox = $('#deletingFileBox');
     const $deletingFileButton = $('#deletingFileButton');
     const $deletingFileForm = $('#deletingFileForm');
+
+    const $rerunFramaButton = $('#rerunFramaButton');
 
 
     $addingDirectoryButton.on('click', () => {
@@ -204,5 +206,28 @@ window.onload = () => {
         }
 
     });
+
+
+
+    $rerunFramaButton.on('click', () => {
+
+        $.ajax({
+            type: 'POST',
+            url: rerun_frama_url,
+            data: '&fileName=' + selectedFile,
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+            success: function (response) {
+                selectedFile = response.title
+                 $('#textFieldContent').html(response.fileContent)
+                 $('#title').text(response.title)
+                 $('#resultContent').html(response.summary)
+            },
+            error: function (response) {
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+    })
 
 }

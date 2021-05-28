@@ -24,6 +24,7 @@ urlpatterns = [
     path('get/ajax/filesystem_tree/', views.get_filesystem_tree, name='get_filesystem_tree'),
     # ex: /aplikacja/rerun_frama/file.name/
     path('rerun_frama/<str:name>/', views.rerun_frama, name='rerun_frama'),
+    path('post/ajax/rerun_frama/', views.rerun_frama_ajax, name='rerun_frama_ajax'),
     # ex: /aplikacja/change_prover/file.name/
     path('change_prover/<str:name>/', views.change_prover, name='change_prover'),
     # ex: /aplikacja/change_VC/file.name/
