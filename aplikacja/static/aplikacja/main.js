@@ -8,6 +8,7 @@ window.onload = () => {
     const $focusSection = $('#focus');
 
    const fetchFile = (fileId) => {
+       print(${fileId})
         $.ajax({
             type: 'get',
             url: select_file_url,
