@@ -95,6 +95,7 @@ def select_file(request):
             'fileContent': data,
             'sectionList': sectionList,
             'summary': summary,
+            'title': file.name
         }
         print("Still here")
         return JsonResponse(directory, status=200)

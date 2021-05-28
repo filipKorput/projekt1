@@ -165,6 +165,8 @@ window.onload = () => {
              },
              success: (response) => {
                  $('#textFieldContent').html(response.fileContent)
+                 $('#title').text(response.title)
+                 $('#resultContent').html(response.summary)
              }
          });
 
