@@ -1,6 +1,6 @@
 window.onload = () => {
 
-    let selectedFile = ''
+    let selectedFile = 'quicksort1.c'
 
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
