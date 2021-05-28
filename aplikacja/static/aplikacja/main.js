@@ -16,4 +16,10 @@ window.onload = () => {
         $addingDirectoryBox.css('display', 'block');
     })
 
+    window.onclick = (e) => {
+        if ($addingDirectoryBox.is(e.target)) {
+            $addingDirectoryBox.css('display', 'none');
+        }
+    }
+
 }
