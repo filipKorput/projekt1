@@ -185,13 +185,13 @@ window.onload = () => {
 
     $(".collapsible").click(function() {
 
-        $(this).toggle("active");
-            let content = this.nextElementSibling;
-            if (content.style.display === "block") {
-              content.style.display = "none";
-            } else {
-              content.style.display = "block";
-            }
+        $(this.classList).toggle("active");
+        let content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
 
     });
 
