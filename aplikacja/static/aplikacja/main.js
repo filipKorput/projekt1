@@ -158,6 +158,9 @@ window.onload = () => {
              type: 'POST',
              url: select_file_url,
              data: val,
+             headers: {
+                'X-CSRFToken': csrftoken
+            },
              success: (response) => {
                  $('#textFieldContent').val(context.fileContent)
              }
