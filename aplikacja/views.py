@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect, JsonResponse
+from django.core import serializers
 from django.urls import reverse
 from django.shortcuts import render
 
@@ -135,15 +136,18 @@ def add_dir_ajax(request):
         return authentication_json_error
 
     if request.is_ajax and request.method == "POST":
-        name = request.POST.get('name')
-        parent = request.POST.get('parent')
+        form = DirectoryForm(request.POST)
+        form.instance.creation_date = timezone.now()
+        form.instance.availability = True
+        form.instance.owner = request.user
+        if form.is_valid():
+            form.instance.save()
+            instance = form.save()
+            ser_instance = serializers.serialize('json', [instance, ])
+        return JsonResponse({"instance": ser_instance}, status=200)
 
-        if name is not None and user is not None:
-            directory = Directory.create(name=name, description=None, owner=request.user, parent=parent, creation_date=timezone.now(), availability=True)
-            directory.save()
-            return JsonResponse({"instance": ""}, status=200)
+    return JsonResponse({"error": "form.errors"}, status=400)
 
-    return JsonResponse({"error": ""}, status=400)
 
 def add_file(request):
     form = FileForm(request.POST, request.FILES)

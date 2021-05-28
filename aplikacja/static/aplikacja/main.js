@@ -22,10 +22,10 @@ window.onload = () => {
         }
     }
 
-    $addingDirectoryForm.submit((e) => {
+    $addingDirectoryForm.submit(function (e) {
         e.preventDefault();
 
-        let serializedData = $addingDirectoryForm.serialize()
+        let serializedData = $(this).serialize()
 
         $.ajax({
             type: 'POST',
@@ -34,9 +34,13 @@ window.onload = () => {
             headers: {
                 'X-CSRFToken': csrftoken
             },
-            success: (response) => {
+            success: function (response) {
                 $addingDirectoryBox.css('display', 'none');
                 $addingDirectoryForm.trigger('reset');
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
             }
         })
     })
