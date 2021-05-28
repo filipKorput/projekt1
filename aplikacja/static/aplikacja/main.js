@@ -167,6 +167,16 @@ window.onload = () => {
                  $('#textFieldContent').html(response.fileContent)
                  $('#title').text(response.title)
                  $('#resultContent').html(response.summary)
+
+                 $('.focus').empty()
+
+                 for (const section of response.sectionList) {
+                     const key = Number(section.key)
+                     $('.focus').append($('<button>').addClass('collapsible').html(section[2] + section[1]).click((event) => {
+                     }));
+                     $('.focus').append($('<div>').addClass('section_content').html(section[0]));
+                     $('.focus').append($('<p>').text(------------------------------------------------------------));
+                 }
              }
          });
 
