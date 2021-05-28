@@ -150,7 +150,8 @@ window.onload = () => {
     })
 
 
-    function chooseFile(evt, fileName) {
+    $(".fileChoice").click(function() {
+
         let val = $(this).val();
 
          $.ajax(
@@ -161,7 +162,9 @@ window.onload = () => {
                 $('#textFieldContent').val(context.fileContent)
             }
         );
-    }
+
+        return false;
+    });
 
 
 
