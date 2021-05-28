@@ -164,7 +164,7 @@ window.onload = () => {
                 'X-CSRFToken': csrftoken
              },
              success: (response) => {
-                 $('#textFieldContent').text(response.fileContent)
+                 $('#textFieldContent').html(response.fileContent)
              }
          });
 
