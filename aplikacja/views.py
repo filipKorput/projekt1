@@ -62,7 +62,7 @@ def detail(request, name):
     }
     return render(request, 'aplikacja/index.html', context)
 
-def select_file(request):
+def get_file(request):
     if not request.user.is_authenticated:
         return authentication_json_error
 
@@ -72,43 +72,47 @@ def select_file(request):
         if file_pk is None or not file_pk.isnumeric():
             return JsonResponse({"error": ""}, status=404)
 
-        file = File.objects.get(name=file_pk)
+        file = File.objects.get(pk=file_pk)
 
         if file is None or not file.available or file.owner != request.user:
             return JsonResponse({"error": ""}, status=404)
 
-        with open(file.blob.path, 'r', encoding='UTF-8') as fileObject:
-            data = fileObject.read().replace('\n', '</br>')
-        summary = file.summary.replace('\n', '<br>')
-        sectionList = getSectionsOfFile(file)
-        context = {
-            'directory_list': Directory.objects.filter(availability=True, owner=request.user),
-            'file_list': File.objects.filter(availability=True, owner=request.user),
-            'file': file,
-            'fileContent': data,
-            'sectionList': sectionList,
-            'proverForm': ProversForm(),
-            'VCForm': VCsForm(),
-            'summary': summary
-        }
 
-        file_sections_arr = []
+        file_sections = getSectionsOfFile(file)
 
-        file_sections = file.filesection_set.all()
-
-        for section in file_sections:
-            file_sections_arr.append({
-                "name": section.name,
-                "description": section.description,
-                "key": section.pk
-            })
-
-        file_dict = {"source_code": file.source_code, "name": file.name, "sections": file_sections_arr}
-        return JsonResponse(context, status=200)
+        return JsonResponse(file_sections, status=200)
 
     return JsonResponse({"error": ""}, status=400)
 
 
+def get_filesystem_tree(request):
+    if not request.user.is_authenticated:
+        return authentication_json_error
+
+    if request.is_ajax and request.method == 'GET':
+        entities = []
+
+        for file in File.objects.all():
+            if file.available and file.owner == request.user:
+                entities.append({
+                    "id": "fil" + str(file.pk),
+                    "parent": "#" if file.parent_directory_id is None else "dir" + str(file.parent_directory.pk),
+                    "text": file.name,
+                })
+
+        for directory in Directory.objects.all():
+            if directory.available and directory.owner == request.user:
+                entities.append({
+                    "id": "dir" + str(directory.pk),
+                    "parent": "#" if directory.parent_directory_id is None else "dir" + str(directory.parent_directory.pk),
+                    "text": directory.name,
+                })
+
+        print(entities)
+
+        return JsonResponse(entities, status=200, content_type="application/json", safe=False)
+
+    return JsonResponse({"error": ""}, status=400)
 
 
 def add_dir(request):

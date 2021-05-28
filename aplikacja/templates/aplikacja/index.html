@@ -13,7 +13,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
         <script>
-            const add_dir_url = "{% url "add_dir" %}";
+            const url_get_filesystem_tree = "{% url "get_filesystem_tree" %}";
+            const select_file_url = "{% url "select_file" %}";
         </script>
 
         <script src="{% static 'aplikacja/main.js' %}?{% now "U" %}" type="text/javascript"></script>
