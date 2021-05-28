@@ -89,7 +89,7 @@
 		float: left;
 	}
 
-    .fileselection {
+    #fileselection {
     	float: left;
   		width: 20%;
   		height: 95%;
@@ -256,7 +256,7 @@
 			font-size: 12px;
 		}
 
-		.fileselection {
+		#fileselection {
   			width: 100%;
   			height: 10%;
   			min-height: 50px;
