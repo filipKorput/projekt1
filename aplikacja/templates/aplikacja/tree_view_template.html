@@ -5,7 +5,7 @@
                 {% if file.parent == directory %}
                     <li>
                         <!--a class="file_name" href="{% url 'detail' file.name %}">{{ file.name }}</a-->
-                        <button class="fileChoice">{{ file.name }}</button>
+                        <button class="fileChoice" value="{{ file.name }}">{{ file.name }}</button>
                     </li>
                 {% endif %}
             {%endfor%}

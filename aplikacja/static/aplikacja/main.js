@@ -152,14 +152,14 @@ window.onload = () => {
 
     $(".fileChoice").click(function() {
 
-         let serializedData = $(this).serialize()
+         let val = $(this).attr('value');
 
-         console.log(serializedData)
+         console.log(val)
 
          $.ajax({
              type: 'POST',
              url: select_file_url,
-             data: serializedData,
+             data: val,
              headers: {
                 'X-CSRFToken': csrftoken
             },
