@@ -9,7 +9,7 @@ window.onload = () => {
 
     const $addingDirectoryBox = $('#addingDirectoryBox');
     const $addingDirectoryButton = $('#addingDirectoryButton');
-    const $directoryForm = $('#addingDirectoryForm');
+    const $addingDirectoryForm = $('#addingDirectoryForm');
 
 
     $addingDirectoryButton.on('click', () => {
@@ -21,5 +21,26 @@ window.onload = () => {
             $addingDirectoryBox.css('display', 'none');
         }
     }
+
+    $addingDirectoryForm.submit((e) => {
+        e.preventDefault();
+
+        let serializedData = $addingDirectoryForm.serialize()
+        serializedData += `&parent_dir_pk=${selectedDirectoryId || '#'}`
+
+        $.ajax({
+            type: 'POST',
+            url: url_post_new_directory,
+            data: serializedData,
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+            success: (reponse) => {
+                $filesystemTree.jstree(true).refresh();
+                $directoryModal.css('display', 'none');
+                $directoryForm.trigger('reset');
+            }
+        })
+    })
 
 }

@@ -119,9 +119,7 @@
                 <div class="contentBox">
                     <form id="addingDirectoryForm" method="post">
                         {% csrf_token %}
-                        <label for="directory_name">Directory name:</label>
-                        <input name="directory_name" id="directory_name" type="text">
-                        <input type="submit" value="Add directory">
+                        {{ directoryForm }}
                     </form>
                 </div>
             </div>
