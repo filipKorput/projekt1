@@ -171,7 +171,7 @@ window.onload = () => {
                  $('.focus').empty()
 
                  for (const section of response.sectionList) {
-                     $('<div>').addClass('section').appendTo($('.focus')).append($('<button>').addClass('collapsible').html(section[2] + " - " + section[1])).append($('<div>').addClass('section_content').html(section[0])).append($('<p>').text("------------------------------------------------------------"));
+                     $('<div/>', { 'class': "section" }).appendTo($('.focus')).append($('<button>').addClass('collapsible').html(section[2] + " - " + section[1])).append($('<div>').addClass('section_content').html(section[0])).append($('<p>').text("------------------------------------------------------------"));
                  }
              }
          });
