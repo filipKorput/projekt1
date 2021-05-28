@@ -9,7 +9,7 @@
     {%for section in sectionList %}
 
         <div class="tooltip {{ section.1 }} section">
-            <button type="button" class="collapsible">Open Collapsible</button>
+            <button type="button" class="collapsible"><p>{{ section.2 }} - {{ section.1 }}</p></button>
             <div class="section_content">
                 <pre>{{ section.0 }}</pre>
             </div>
