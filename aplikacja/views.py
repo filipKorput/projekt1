@@ -92,8 +92,6 @@ def select_file(request):
         sectionList = getSectionsOfFile(file)
 
         directory = {
-            'directory_list': Directory.objects.filter(availability=True, owner=request.user),
-            'file_list': File.objects.filter(availability=True, owner=request.user),
             'file': file,
             'fileContent': data,
             'sectionList': sectionList,
@@ -104,7 +102,6 @@ def select_file(request):
             'fileForm': FileForm()
         }
         print("Still here")
-        print(directory)
         return JsonResponse(directory, status=200)
 
     return JsonResponse({"error": ""}, status=400)
