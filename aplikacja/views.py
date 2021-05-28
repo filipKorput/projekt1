@@ -167,7 +167,7 @@ def add_file(request):
     return render(request, 'aplikacja/add_file.html', {'form': form})
 
 
-def add_dir_ajax(request):
+def add_file_ajax(request):
     if not request.user.is_authenticated:
         return authentication_json_error
 
