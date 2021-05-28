@@ -162,7 +162,7 @@ window.onload = () => {
              data: '&fileName=' + val,
              headers: {
                 'X-CSRFToken': csrftoken
-            },
+             },
              success: (response) => {
                  $('#textFieldContent').val(response.fileContent)
              }
