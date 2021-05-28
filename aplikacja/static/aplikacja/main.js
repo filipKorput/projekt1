@@ -81,10 +81,18 @@ window.onload = () => {
 
         let data = new FormData($('form').get(0));
 
+        let f_obj = $("#blob").get(0).files[0];
+        console.log("File object:", f_obj);
+
+        data.append("uploadedFile", f_obj)
+
         $.ajax({
             type: 'POST',
             url: add_file_url,
             data: data,
+            cache: false,
+            processData:false,
+            contentType:false,
             headers: {
                 'X-CSRFToken': csrftoken
             },

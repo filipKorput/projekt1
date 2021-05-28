@@ -176,7 +176,8 @@ def add_file_ajax(request):
         form.instance.creation_date = timezone.now()
         form.instance.availability = True
         form.instance.owner = request.user
-        form.instance.blob = request.FILES['blob']
+        form.instance.blob = request.FILES.get("uploadedFile")
+        print(form.instance.blob)
         print(form.errors)
         if form.is_valid():
             form.instance.save()
