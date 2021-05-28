@@ -189,7 +189,9 @@
 	}
 
 	.section_content {
-		overflow: auto;
+		padding: 0 18px;
+		display: none;
+		overflow: hidden;
 	}
 
 	.collapsible {
