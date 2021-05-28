@@ -177,6 +177,7 @@ def add_file_ajax(request):
         form.instance.availability = True
         form.instance.owner = request.user
         print(form)
+        print(form.errors)
         if form.is_valid():
             form.instance.blob = request.FILES['blob']
             form.instance.save()
@@ -187,7 +188,6 @@ def add_file_ajax(request):
             addSectionsOfFile(file, prover, VCs)
             ser_instance = serializers.serialize('json', [instance, ])
             return JsonResponse({"instance": ser_instance}, status=200)
-
     return JsonResponse({"error": "form.errors"}, status=400)
 
 
