@@ -157,7 +157,7 @@ window.onload = () => {
          $.ajax({
              type: 'POST',
              url: select_file_url,
-             data: val;
+             data: val,
              success: (response) => {
                  $('#textFieldContent').val(context.fileContent)
              }
