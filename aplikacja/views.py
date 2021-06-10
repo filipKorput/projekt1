@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect, JsonResponse
 from django.core import serializers
-from django.urls import reverse
 from django.shortcuts import render
 
 from .models import Directory, User, File
@@ -127,8 +126,6 @@ def get_fileTree(request):
                     "parent": "#" if directory.parent is None else "dir" + str(directory.parent.name),
                     "text": directory.name,
                 })
-
-        print(entities)
 
         return JsonResponse(entities, status=200, content_type="application/json", safe=False)
 
