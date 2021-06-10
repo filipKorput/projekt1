@@ -73,6 +73,7 @@ window.onload = () => {
             success: function (response) {
                 $addingDirectoryBox.css('display', 'none');
                 $addingDirectoryForm.trigger('reset');
+                $fileTree.jstree(true).refresh();
             },
             error: function (response) {
                 // alert the error if any error occured
@@ -100,6 +101,7 @@ window.onload = () => {
             success: function (response) {
                 $addingFileBox.css('display', 'none');
                 $addingFileForm.trigger('reset');
+                $fileTree.jstree(true).refresh();
             },
             error: function (response) {
                 // alert the error if any error occured
@@ -123,6 +125,7 @@ window.onload = () => {
             success: function (response) {
                 $deletingDirectoryBox.css('display', 'none');
                 $deletingDirectoryForm.trigger('reset');
+                $fileTree.jstree(true).refresh();
             },
             error: function (response) {
                 // alert the error if any error occured
@@ -146,6 +149,7 @@ window.onload = () => {
             success: function (response) {
                 $deletingFileBox.css('display', 'none');
                 $deletingFileForm.trigger('reset');
+                $fileTree.jstree(true).refresh();
             },
             error: function (response) {
                 // alert the error if any error occured
