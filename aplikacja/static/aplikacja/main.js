@@ -202,6 +202,7 @@ window.onload = () => {
                     }
                   });
                 }
+
              }
 
          });
@@ -238,6 +239,37 @@ window.onload = () => {
                 $('#textFieldContent').html(response.fileContent)
                 $('#title').text(response.title)
                 $('#resultContent').html(response.summary)
+
+                $('.focus').empty()
+
+                 for (const section of response.sectionList) {
+                     $('<div/>', { 'class': "section " + section[1] }).appendTo($('.focus')).append($('<button>').attr('type', 'button').addClass('collapsible').html(section[2] + " - " + section[1]).click(function() {
+                     $(this.classList).toggle("active");
+                     let content = this.nextElementSibling;
+                     if (content.style.display === "block") {
+                       content.style.display = "none";
+                     } else {
+                       content.style.display = "block";
+                     }
+                     })).append($('<div>').addClass('section_content').html("<pre>" + section[0] + "</pre>"));
+                     ($('.focus')).append($('<p>').text("------------------------------------------------------------"));
+                 }
+
+                 let coll = document.getElementsByClassName("collapsible");
+                let i;
+
+                for (i = 0; i < coll.length; i++) {
+                  coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    let content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                      content.style.display = "none";
+                    } else {
+                      content.style.display = "block";
+                    }
+                  });
+                }
+
             },
             error: function (response) {
                 alert(response["responseJSON"]["error"]);
