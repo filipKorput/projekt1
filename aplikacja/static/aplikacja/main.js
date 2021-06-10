@@ -21,7 +21,7 @@ window.onload = () => {
     const $deletingFileForm = $('#deletingFileForm');
 
     const $rerunFramaButton = $('#rerunFramaButton');
-    const $fileTree = $('#fileselection');
+    const $fileTree = $('.fileselection');
 
 
     $addingDirectoryButton.on('click', () => {
@@ -242,21 +242,6 @@ window.onload = () => {
          });
 
     }
-
-
-    $(".collapsible").click(function() {
-
-        $(this.classList).toggle("active");
-        let content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-        } else {
-          content.style.display = "block";
-        }
-
-    });
-
-
 
     $rerunFramaButton.on('click', () => {
 
