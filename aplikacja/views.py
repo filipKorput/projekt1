@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.core import serializers
 from django.shortcuts import render
 
-from .models import Directory, User, File
+from .models import Directory, File
 from .forms import DirectoryForm, FileForm, ProversForm, VCsForm
 from .obslugaFramy import *
 

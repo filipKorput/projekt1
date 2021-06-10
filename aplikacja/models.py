@@ -17,7 +17,7 @@ class Directory(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=False)
     availability = models.BooleanField(blank=False)
     parent = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True)
-    timestamp = models.DateTimeField('last modified', blank=True, default=timezone.now())
+    timestamp = models.DateTimeField('last modified', blank=True, default=timezone.now)
     validity = models.BooleanField(blank=False, default=True)
 
 
@@ -28,7 +28,7 @@ class File(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=False)
     availability = models.BooleanField(blank=False)
     parent = models.ForeignKey(Directory, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField('last modified', blank=True, default=timezone.now())
+    timestamp = models.DateTimeField('last modified', blank=True, default=timezone.now)
     validity = models.BooleanField(blank=False, default=True)
     blob = models.FileField(null=True)
     summary = models.TextField(null=True)
