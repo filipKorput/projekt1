@@ -197,7 +197,7 @@ window.onload = () => {
          $.ajax({
              type: 'POST',
              url: select_file_url,
-             data: 'fileName=${fileName}',
+             data: `fileName=${fileName}`,
              headers: {
                 'X-CSRFToken': csrftoken
              },
