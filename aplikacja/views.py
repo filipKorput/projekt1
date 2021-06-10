@@ -113,7 +113,7 @@ def get_fileTree(request):
         entities = []
 
         for file in File.objects.all():
-            if file.available and file.owner == request.user:
+            if file.availability and file.owner == request.user:
                 entities.append({
                     "id": "fil" + str(file.name),
                     "parent": "dir" + str(file.parent.name),
@@ -121,7 +121,7 @@ def get_fileTree(request):
                 })
 
         for directory in Directory.objects.all():
-            if directory.available and directory.owner == request.user:
+            if directory.availability and directory.owner == request.user:
                 entities.append({
                     "id": "dir" + str(directory.name),
                     "parent": "#" if directory.parent is None else "dir" + str(directory.parent.name),
