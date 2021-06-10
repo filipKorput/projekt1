@@ -21,6 +21,7 @@ window.onload = () => {
     const $deletingFileForm = $('#deletingFileForm');
 
     const $rerunFramaButton = $('#rerunFramaButton');
+    const $fileTree = $('#fileselection');
 
 
     $addingDirectoryButton.on('click', () => {
@@ -154,16 +155,49 @@ window.onload = () => {
     })
 
 
-    $(".fileChoice").click(function() {
+    $filesystemTree
+        .on('changed.jstree', (event, data) => {
+            const node = data.node
 
-         let val = $(this).attr('value');
+            if (node) {
+                if (node.id === '') {
+                    selectedFile = null
 
-         console.log(val)
+                    $('#textFieldContent').empty()
+                    $('#title').empty()
+                    $('#resultContent').empty()
+                    $('.focus').empty()
+                } else {
+                    selectedFile = node.id.substr(3, node.id.length - 3)
+                    getFile(selectedFile)
+                }
+            }
+        })
+        .jstree({
+            'core': {
+                'data': {
+                    'type': 'GET',
+                    'url': url_get_fileTree,
+                    'contentType': 'application/json; charset=utf-8',
+
+                    success: (data) => {
+                        $(data).each(() => ({'id': this.id, 'parent': this.parent, 'text': this.text}))
+                    }
+                },
+                'plugins': ['state']
+            }
+        });
+
+
+    const getFile = (fileName) => {
+
+         //let val = $(this).attr('value');
+         //console.log(val)
 
          $.ajax({
              type: 'POST',
              url: select_file_url,
-             data: '&fileName=' + val,
+             data: 'fileName=${fileName}',
              headers: {
                 'X-CSRFToken': csrftoken
              },
@@ -207,8 +241,7 @@ window.onload = () => {
 
          });
 
-        return false;
-    });
+    }
 
 
     $(".collapsible").click(function() {

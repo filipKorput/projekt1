@@ -105,7 +105,7 @@ def select_file(request):
     return JsonResponse({"error": ""}, status=400)
 
 
-def get_filesystem_tree(request):
+def get_fileTree(request):
     if not request.user.is_authenticated:
         return authentication_json_error
 
@@ -115,16 +115,16 @@ def get_filesystem_tree(request):
         for file in File.objects.all():
             if file.available and file.owner == request.user:
                 entities.append({
-                    "id": "fil" + str(file.pk),
-                    "parent": "#" if file.parent_directory_id is None else "dir" + str(file.parent_directory.pk),
+                    "id": "fil" + str(file.name),
+                    "parent": "dir" + str(file.parent.name),
                     "text": file.name,
                 })
 
         for directory in Directory.objects.all():
             if directory.available and directory.owner == request.user:
                 entities.append({
-                    "id": "dir" + str(directory.pk),
-                    "parent": "#" if directory.parent_directory_id is None else "dir" + str(directory.parent_directory.pk),
+                    "id": "dir" + str(directory.name),
+                    "parent": "#" if directory.parent is None else "dir" + str(directory.parent.name),
                     "text": directory.name,
                 })
 
