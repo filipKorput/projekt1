@@ -88,7 +88,7 @@
                 </div>
 
                 <div id="tab1" class="tabcontent">
-                    <form action="../../change_prover/{{ file.name }}/" method="POST">
+                    <form action="change_prover/" method="POST">
                         {% csrf_token %}
                         {{ proverForm }}
                         <input type="submit" id="prover-submit"/>
@@ -96,7 +96,7 @@
                 </div>
 
                 <div id="tab2" class="tabcontent">
-                    <form action="../../change_VC/{{ file.name }}/" method="POST">
+                    <form action="change_VC/" method="POST">
                         {% csrf_token %}
                         {{ VCForm }}
                         <input type="submit" id="VC-submit"/>

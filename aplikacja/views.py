@@ -302,16 +302,16 @@ def rerun_frama_ajax(request):
     return JsonResponse({"error": ""}, status=400)
 
 
-def change_prover(request, name):
+def change_prover(request):
     prover = request.POST['prover']
     request.session['prover'] = prover
     print('Wybrano prover: ' + request.session['prover'])
-    return HttpResponseRedirect('/aplikacja/detail/' + name + '/')
+    return HttpResponseRedirect('/aplikacja/')
 
-def change_VC(request, name):
+def change_VC(request):
     VCs = dict(request.POST).get('conditions', [])
     request.session['VCs'] = VCs
     print('Wybrano verification conditions:')
     print(request.session['VCs'])
-    return HttpResponseRedirect('/aplikacja/detail/' + name + '/')
+    return HttpResponseRedirect('/aplikacja/')
 

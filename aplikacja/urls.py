@@ -25,10 +25,10 @@ urlpatterns = [
     # ex: /aplikacja/rerun_frama/file.name/
     path('rerun_frama/<str:name>/', views.rerun_frama, name='rerun_frama'),
     path('post/ajax/rerun_frama/', views.rerun_frama_ajax, name='rerun_frama_ajax'),
-    # ex: /aplikacja/change_prover/file.name/
-    path('change_prover/<str:name>/', views.change_prover, name='change_prover'),
-    # ex: /aplikacja/change_VC/file.name/
-    path('change_VC/<str:name>/', views.change_VC, name='change_VC'),
+    # ex: /aplikacja/change_prover/
+    path('change_prover/', views.change_prover, name='change_prover'),
+    # ex: /aplikacja/change_VC/
+    path('change_VC/', views.change_VC, name='change_VC'),
     # ex: /aplikacja/login/
     path('login/', UserLogin.as_view(), name='login'),
     # ex: /aplikacja/authentication/
