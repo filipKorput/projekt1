@@ -155,7 +155,7 @@ window.onload = () => {
     })
 
 
-    $filesystemTree
+    $fileTree
         .on('changed.jstree', (event, data) => {
             const node = data.node
 
