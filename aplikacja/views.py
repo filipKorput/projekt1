@@ -31,7 +31,7 @@ def authentication(request):
         login(request, user)
         print("zalogowano: " + username)
         return HttpResponseRedirect('..')
-    return render(request, 'aplikacja/login.html')
+    return HttpResponseRedirect('/aplikacja/login/')
 
 
 def index(request):
@@ -71,6 +71,7 @@ def detail(request, name):
 
 
 def select_file(request):
+    print("im here")
     if not request.user.is_authenticated:
         return authentication_json_error
 
