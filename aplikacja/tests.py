@@ -3,6 +3,7 @@ from django.utils import timezone
 import json
 
 from .models import *
+from .forms import *
 
 
 
@@ -77,7 +78,7 @@ class FileSectionTestCase(TestCase):
 
 
 
-class AuthenticationTestCase(TestCase):
+class LoginTests(TestCase):
     def setUp(self):
         User.objects.create_user(username='testUser', password='testPass')
 
@@ -85,21 +86,28 @@ class AuthenticationTestCase(TestCase):
         response = self.client.post('/aplikacja/authentication/', {'username': 'testUser', 'password': 'testPass'})
         self.assertRedirects(response, '/aplikacja/')
 
-    def testWrongUsername(self):
-        response = self.client.post('/aplikacja/authentication/', {'username': 'WRONG', 'password': 'testPass'})
-        print(response)
+    def testEmptyUsername(self):
+        response = self.client.post('/aplikacja/authentication/', {'password': 'testPass'})
         self.assertRedirects(response, '/aplikacja/login/')
 
-    def test_incorrect_password(self):
-        response = self.client.post('/authentication/', {'username': 'testuser', 'password': '123456789'})
-        self.assertRedirects(response, '/login/')
+    def testEmptyPassword(self):
+        response = self.client.post('/aplikacja/authentication/', {'username': 'testUser'})
+        self.assertRedirects(response, '/aplikacja/login/')
 
-    def test_no_username(self):
-        response = self.client.post('/authentication/', {'password': '12345678'})
-        self.assertRedirects(response, '/login/')
+    def testBothEmpty(self):
+        response = self.client.post('/aplikacja/authentication/', {})
+        self.assertRedirects(response, '/aplikacja/login/')
+
+    def testWrongUsername(self):
+        response = self.client.post('/aplikacja/authentication/', {'username': 'WRONG', 'password': 'testPass'})
+        self.assertRedirects(response, '/aplikacja/login/')
+
+    def testWrongPassword(self):
+        response = self.client.post('/aplikacja/authentication/', {'username': 'testUser', 'password': 'WRONG'})
+        self.assertRedirects(response, '/aplikacja/login/')
 
 
-class FileTestCase(TestCase):
+class FileTests(TestCase):
     def setUp(self):
         tempUser1 = User.objects.create_user(username="tempUser1", password="pass1")
         tempUser2 = User.objects.create_user(username="tempUser2", password="pass2")
@@ -116,8 +124,54 @@ class FileTestCase(TestCase):
     def testGetFile(self):
         file1 = File.objects.get(name="tempFile1")
         self.client.login(username='tempUser1', password='pass1')
-        response = self.client.get('/aplikacja/get/ajax/file/', {'fileName': file1.name})
+        response = self.client.post('/aplikacja/get/ajax/file/', {'fileName': file1.name})
         print(response.content)
-        self.assertJSONEqual(response.content, {'title': file1.name, 'sectionList': []})
+        self.assertJSONEqual(response.content, {'fileContent': None, 'sectionList': [], 'summary': None, 'title': 'tempFile1'})
         self.assertEqual(response.status_code, 200)
+
+    def testFileDoesntExist(self):
+        self.client.login(username='tempUser1', password='pass1')
+        response = self.client.post('/aplikacja/get/ajax/file/', {'fileName': "nonExistingFile"})
+        self.assertJSONEqual(response.content, {'error': ''})
+        self.assertEqual(response.status_code, 404)
+
+
+
+
+
+
+class FileFormTests(TestCase):
+    def setUp(self):
+        tempUser1 = User.objects.create_user(username="tempUser1", password="pass1")
+        Directory.objects.create(name="parentDir", owner=tempUser1, parent=None, creation_date=timezone.now(), availability=True)
+
+
+    def testEmptyBlob(self):
+        parentDir = Directory.objects.get(name="parentDir")
+        form = FileForm(data={'name': "someNAme", 'description': 'some Description', 'parent': parentDir, 'blob': None})
+        self.assertFalse(form.is_valid())
+
+    def testEmptyFields(self):
+        form = FileForm(data={})
+        self.assertFalse(form.is_valid())
+        form = FileForm(data={'description': 'nice dir', 'parent': 5})
+        self.assertFalse(form.is_valid())
+
+
+
+class DirectoryFormTests(TestCase):
+
+    def testBasic(self):
+        form = DirectoryForm(data={'name': 'someName', 'descrption': "something", 'parent': None})
+        self.assertTrue(form.is_valid())
+        form = DirectoryForm(data={'name': 'something'})
+        self.assertTrue(form.is_valid())
+        form = DirectoryForm(data={'name': 'something', 'description': 'blabla'})
+        self.assertTrue(form.is_valid())
+
+    def testEmptyFields(self):
+        form = DirectoryForm(data={})
+        self.assertFalse(form.is_valid())
+        form = DirectoryForm(data={'name': 'something', 'parent': 'somestring'})
+        self.assertFalse(form.is_valid())
 

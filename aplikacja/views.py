@@ -24,7 +24,6 @@ def authentication(request):
     password = request.POST.get('password')
     user = authenticate(request, username=username, password=password)
 
-    print(username + " " + password)
     print(user)
 
     if user is not None:
@@ -71,7 +70,6 @@ def detail(request, name):
 
 
 def select_file(request):
-    print("im here")
     if not request.user.is_authenticated:
         return authentication_json_error
 
@@ -83,15 +81,27 @@ def select_file(request):
             print("no file")
             return JsonResponse({"error": ""}, status=404)
 
-        file = File.objects.get(name=file_name)
+        file = None
+        try:
+            file = File.objects.get(name=file_name)
+        except:
+            print("no file")
+            return JsonResponse({"error": ""}, status=404)
+
 
         if file is None or not file.availability or file.owner != request.user:
             return JsonResponse({"error": ""}, status=404)
 
-        with open(file.blob.path, 'r', encoding='UTF-8') as fileObject:
-            data = fileObject.read().replace('\n', '</br>')
-        summary = file.summary.replace('\n', '<br>')
-        sectionList = getSectionsOfFile(file)
+        data = None
+        summary = None
+        sectionList = []
+        try:
+            with open(file.blob.path, 'r', encoding='UTF-8') as fileObject:
+                data = fileObject.read().replace('\n', '</br>')
+            summary = file.summary.replace('\n', '<br>')
+            sectionList = getSectionsOfFile(file)
+        except:
+            print("no blob")
 
         directory = {
             'fileContent': data,
