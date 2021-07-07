@@ -27,11 +27,13 @@ PROJECT_DIR = os.path.dirname(__file__)
 SECRET_KEY = '4^v7793c50-b_wu$r2pw60u9mko7zs_z5@8p)v3(c*t@n(7%)h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+STATIC_ROOT = Path.home() / "nginx" / "static"
 
 ALLOWED_HOSTS = [
     'students.mimuw.edu.pl',
-    'localhost'
+    'localhost',
+    '127.0.0.1'
 ]
 
 
@@ -126,7 +128,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
