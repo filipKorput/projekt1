@@ -161,22 +161,6 @@ def add_dir_ajax(request):
     return JsonResponse({"error": "form.errors"}, status=400)
 
 
-def add_file(request):
-    form = FileForm(request.POST, request.FILES)
-    form.instance.creation_date = timezone.now()
-    form.instance.availability = True
-    form.instance.owner = request.user
-    if form.is_valid():
-        form.instance.blob = request.FILES['blob']
-        form.instance.save()
-        file = File.objects.get(name=form.instance.name)
-        prover = None
-        VCs = []
-        addSectionsOfFile(file, prover, VCs)
-        return HttpResponseRedirect('..')
-    return render(request, 'aplikacja/add_file.html', {'form': form})
-
-
 def add_file_ajax(request):
     if not request.user.is_authenticated:
         return authentication_json_error
@@ -201,19 +185,6 @@ def add_file_ajax(request):
     return JsonResponse({"error": "form.errors"}, status=400)
 
 
-def delete_dir(request):
-    context = {
-        'directory_list': Directory.objects.filter(availability=True),
-    }
-    if request.POST.get("name"):
-        name = request.POST.get("name")
-        d = Directory.objects.get(name=name)
-        d.availability = False
-        d.save()
-        return HttpResponseRedirect('..')
-    return render(request, 'aplikacja/delete_dir.html', context)
-
-
 def delete_dir_ajax(request):
     if not request.user.is_authenticated:
         return authentication_json_error
@@ -227,19 +198,6 @@ def delete_dir_ajax(request):
     return JsonResponse({"error": "form.errors"}, status=400)
 
 
-def delete_file(request):
-    context = {
-        'file_list': File.objects.filter(availability=True),
-    }
-    if request.POST.get("name"):
-        name = request.POST.get("name")
-        f = File.objects.get(name=name)
-        f.availability = False
-        f.save()
-        return HttpResponseRedirect('..')
-    return render(request, 'aplikacja/delete_file.html', context)
-
-
 def delete_file_ajax(request):
     if not request.user.is_authenticated:
         return authentication_json_error
@@ -251,14 +209,6 @@ def delete_file_ajax(request):
         f.save()
         return JsonResponse({}, status=200)
     return JsonResponse({"error": "form.errors"}, status=400)
-
-
-def rerun_frama(request, name):
-    file = File.objects.get(name=name)
-    prover = request.session.get('prover', '')
-    VCs = request.session.get('VCs', [])
-    updateFramaOfFile(file, prover, VCs)
-    return HttpResponseRedirect('/aplikacja/detail/' + name)
 
 
 def rerun_frama_ajax(request):
