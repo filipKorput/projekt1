@@ -6,8 +6,6 @@ from .views import *
 urlpatterns = [
     # ex: /aplikacja/
     path('', views.index, name='index'),
-    # ex: /aplikacja/add_dir/
-    path('add_dir/', views.add_dir, name='add_dir'),
     path('post/ajax/add_dir_ajax/', views.add_dir_ajax, name='add_dir_ajax'),
     # ex: /aplikacja/add_file/
     path('add_file/', views.add_file, name='add_file'),

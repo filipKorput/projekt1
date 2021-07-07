@@ -139,7 +139,6 @@ class FileTests(TestCase):
 
 
 
-
 class FileFormTests(TestCase):
     def setUp(self):
         tempUser1 = User.objects.create_user(username="tempUser1", password="pass1")

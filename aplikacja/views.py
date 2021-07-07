@@ -143,17 +143,6 @@ def get_fileTree(request):
     return JsonResponse({"error": ""}, status=400)
 
 
-def add_dir(request):
-    form = DirectoryForm(request.POST)
-    form.instance.creation_date = timezone.now()
-    form.instance.availability = True
-    form.instance.owner = request.user
-    if form.is_valid():
-        form.instance.save()
-        return HttpResponseRedirect('..')
-    return render(request, 'aplikacja/add_dir.html', {'form': form})
-
-
 def add_dir_ajax(request):
     if not request.user.is_authenticated:
         return authentication_json_error
