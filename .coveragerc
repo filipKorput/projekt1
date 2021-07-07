@@ -1,6 +1,6 @@
 [run]
 source = .
-omit = ./venv/*,*asgi*,*wsgi*
+omit = ./venv/*,*asgi*,*wsgi*,*obslugaFramy*
 
 [report]
-omit = ./venv/*,*asgi*,*wsgi*
+omit = ./venv/*,*asgi*,*wsgi*,*obslugaFramy*
